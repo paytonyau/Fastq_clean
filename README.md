@@ -97,3 +97,17 @@ running against your own real reference and reads.
   narrow length window) isn't reproduced here — for that, use fastp with
   `--length_required` set low (e.g. 15–18) and no polyG/overlap trimming, or
   use `cutadapt` directly, which is more common for sRNA-seq specifically.
+
+## Citation
+
+This workflow reimplements the pipeline logic originally described in:
+
+> Zhang M, Sun H, Fei Z, Zhan F, Gong X, Gao S. Fastq_clean: An optimized
+> pipeline to clean the Illumina sequencing data with quality control. In:
+> *Bioinformatics and Biomedicine (BIBM), 2014 IEEE International Conference
+> on*; 2014. IEEE: 44–48.
+> DOI: [10.1109/BIBM.2014.6999309](https://doi.org/10.1109/BIBM.2014.6999309)
+
+Please cite the original paper if you use this pipeline (or its logic) in
+published work — this repo just swaps the underlying tools for current
+maintained alternatives.
