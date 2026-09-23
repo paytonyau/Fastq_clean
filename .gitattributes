@@ -1,0 +1,3 @@
+FastQC/** linguist-vendored
+FastQC/Help/** linguist-documentation
+bin/PerlLib/** linguist-vendored
