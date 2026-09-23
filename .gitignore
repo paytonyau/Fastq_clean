@@ -1,0 +1,16 @@
+# Pipeline output — regenerate with `snakemake -c4 --configfile config/config.yaml`
+results/
+
+# bwa index files generated from test_data/contaminant_reference.fasta
+test_data/*.fasta.amb
+test_data/*.fasta.ann
+test_data/*.fasta.bwt
+test_data/*.fasta.pac
+test_data/*.fasta.sa
+
+# Python
+__pycache__/
+*.pyc
+
+# Snakemake
+.snakemake/

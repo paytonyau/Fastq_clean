@@ -1,0 +1,50 @@
+name: Test pipeline
+
+# Runs the pipeline against the bundled synthetic test data on every push/PR,
+# so the README's "it works" claim stays verified as dependencies (fastp,
+# bwa, samtools, snakemake) update over time. Full results/ (fastp HTML
+# reports, BAMs, FASTQs) are uploaded as a downloadable workflow artifact —
+# not committed to the repo — so anyone who wants the full output can grab
+# it from the Actions tab without it bloating the repo or its language stats.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:   # lets you trigger it manually from the Actions tab
+
+jobs:
+  test-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Install pipeline dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fastp bwa samtools
+          pip install snakemake pandas
+
+      - name: Generate synthetic test data
+        run: python3 test_data/make_test_data.py
+
+      - name: Run pipeline (dry run first, then for real)
+        run: |
+          snakemake -c2 --configfile config/config.yaml -n
+          snakemake -c2 --configfile config/config.yaml
+
+      - name: Check summary output exists and is non-empty
+        run: |
+          test -s results/summary.tsv
+          test -s results/summary.html
+          echo "--- results/summary.tsv ---"
+          cat results/summary.tsv
+
+      - name: Upload full results as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-test-results
+          path: results/
+          retention-days: 14
