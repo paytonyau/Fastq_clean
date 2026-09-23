@@ -1,0 +1,34 @@
+# ==============================================================================
+# Fastq_clean (modernised) — configuration
+#
+# Mirrors the tunable parameters from the original illumina_clean.pl config
+# files (conf/forward.config, conf/reverse.config), translated to fastp/bwa
+# equivalents. Defaults below match the original script's Illumina-100bp
+# defaults; adjust for your read length / platform.
+# ==============================================================================
+
+samples: config/samples.tsv   # sample sheet: sample_id, fastq_1, fastq_2 (fastq_2 optional -> single-end)
+
+outdir: results
+
+# --- Stage 1: adapter / quality trimming (was: illumina_clean.pl pattern-matching + trim_ends.pl) ---
+trimming:
+  quality_phred: 20        # was quality_Cutoff=20
+  n_base_limit: 2          # was n_Cutoff=2
+  length_required: 25      # was read_Length=25 (min length kept after trimming)
+  detect_adapter_for_pe: true   # fastp auto-detects adapters by read overlap for PE data
+  extra_args: ""            # e.g. "--trim_poly_g" for NovaSeq/NextSeq 2-colour chemistry
+
+# --- Stage 2: contaminant filtering (was: bwa align to rRNA_reference / virus_reference, discard hits) ---
+contaminant_filter:
+  enabled: true
+  reference_fasta: test_data/contaminant_reference.fasta   # combined rRNA + virus reference (concatenate your own)
+  bwa_threads: 4            # was thread_num=8
+  # original defaults for reference: max_dist=4, max_open=1, max_extension=1, len_seed=50, dist_seed=2
+  # bwa mem doesn't expose these 1:1 (that was bwa aln/sampe-era); bwa mem's defaults are tuned for
+  # short-read contamination screening out of the box, so we don't try to force-map the old flags.
+
+# --- Stage 3: stats/summary (was: tools/qcStatistics.pl, tools/extract_clean_report.pl, Fq_statistics.R) ---
+stats:
+  summary_tsv: summary.tsv
+  summary_html: summary.html

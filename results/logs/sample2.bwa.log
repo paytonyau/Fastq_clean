@@ -1,0 +1,17 @@
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 1068 sequences (102394 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 150, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (149, 149, 149)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (149, 149)
+[M::mem_pestat] mean and std.dev: (149.00, 0.00)
+[M::mem_pestat] low and high boundaries for proper pairs: (149, 149)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 1068 reads in 0.024 CPU sec, 0.025 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 4 test_data/contaminant_reference.fasta results/trimmed/sample2_R1.trimmed.fastq.gz results/trimmed/sample2_R2.trimmed.fastq.gz
+[main] Real time: 0.031 sec; CPU: 0.027 sec
+[M::bam2fq_mainloop] discarded 0 singletons
+[M::bam2fq_mainloop] processed 768 reads
